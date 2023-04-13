@@ -1,46 +1,63 @@
 import React from "react";
 import Head from "next/head";
 import Layout from "../components/layout";
-import Item from "../components/item";
 import FloatingButton from "../components/floating-button";
+import Link from "next/link";
 
 export default () => {
   return (
-  <>
-  <Head>
-    <title>Home</title>
-  </Head>
-  <Layout title="Twitter of JunDemi" hasTabBar>
-    <div className="flex flex-col space-y-5 divide-y">
-      {[1,1,1,1,1,1].map((i) => (
-        <Item
-          id={i}
-          key={i}
-          title="Hello Twitter"
-          price={300}
-          comments={1}
-          hearts={2}
-        />
-      ))}
-      <FloatingButton href="/products/upload">
-        <svg
-          className="h-6 w-6"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          aria-hidden="true"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-          />
-        </svg>
-      </FloatingButton>
-    </div>
-  </Layout>
-  </>
+    <>
+      <Head>
+        <title>Home</title>
+      </Head>
+      <Layout hasTabBar title="Tweeter of JunDemi">
+        <div className="space-y-4 divide-y-[2px]">
+          {[1, 2, 3, 4, 5, 6].map((_, i) => (
+            <Link key={i} href={`/tweet/${_}`} className="flex cursor-pointer flex-col pt-4 items-start">
+              <span className="flex ml-4 items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+                Tweet
+              </span>
+              <div className="mt-2 px-4 text-gray-700">
+                <span className="text-blue-400 font-medium">Q.</span> What is
+                the best mandu restaurant?
+              </div>
+              <div className="mt-5 px-4 flex items-center justify-between w-full text-gray-500 font-medium text-xs">
+                <span>니꼬</span>
+                <span>18시간 전</span>
+              </div>
+              <div className="flex px-4 space-x-5 mt-3 text-gray-700 py-2.5 border-t   w-full">
+                <span className="flex space-x-2 items-center text-sm">
+                  <svg
+                    className="w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+                    ></path>
+                  </svg>
+                  <span>2</span>
+                </span>
+              </div>
+            </Link>
+          ))}
+          <FloatingButton href="/tweet/write">
+            <svg
+              className="w-5 h-5"
+              aria-hidden="true"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+            >
+              <path d="M6.29 18.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0020 3.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.073 4.073 0 01.8 7.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 010 16.407a11.616 11.616 0 006.29 1.84" />
+            </svg>
+          </FloatingButton>
+        </div>
+      </Layout>
+    </>
   );
 }
