@@ -6,6 +6,7 @@ import Link from "next/link";
 import useUser from "../lib/client/useUser";
 import useSWR from "swr";
 import { Tweets } from "@prisma/client";
+import { useRouter } from "next/router";
 
 interface TweetWithCount extends Tweets {
   _count: {
@@ -20,6 +21,7 @@ interface TweetResponse {
 
 export default () => {
   const { user, isLoading } = useUser();
+  const router = useRouter();
   const { data } = useSWR<TweetResponse>("/api/tweets");
   return (
     <>
@@ -28,7 +30,7 @@ export default () => {
       </Head>
         <Layout hasTabBar title="Tweeter of JunDemi">
           <div className="space-y-4 divide-y-[2px]">
-            {data?.tweets.map((tweet) => (
+            {data?.tweets?.map((tweet) => (
               <Link
                 key={tweet.id}
                 href={`/tweet/${tweet.id}`}

@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import useMutation from "../lib/client/useMutation";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
+import Head from "next/head";
 
 interface EnterForm {
   nickname?: string;
@@ -29,6 +30,10 @@ const Enter: NextPage = () => {
     }
   });
   return (
+    <>
+    <Head>
+        <title>Sign up</title>
+    </Head>
     <div className="mt-16 px-4">
       <h3 className="text-3xl font-bold text-center">Sign Up</h3>
       <div className="mt-12">
@@ -65,6 +70,7 @@ const Enter: NextPage = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 export default Enter;

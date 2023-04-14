@@ -8,6 +8,7 @@ import { useForm } from "react-hook-form";
 import useMutation from "../../lib/client/useMutation";
 import { useEffect } from "react";
 import { Tweets } from "@prisma/client";
+import Head from "next/head";
 
 interface UploadTweetForm {
   title: string;
@@ -34,6 +35,10 @@ const Upload: NextPage = () => {
      }
    }, [data, router]);
   return (
+    <>
+    <Head>
+        <title>Upload Tweet</title>
+    </Head>
     <Layout canGoBack title="Upload Tweet">
       <form className="p-4 space-y-4" onSubmit={handleSubmit(onValid)}>
         <Input
@@ -52,6 +57,7 @@ const Upload: NextPage = () => {
         <Button text={loading ? "Loading" : "Upload Tweet"} />
       </form>
     </Layout>
+    </>
   );
 };
 

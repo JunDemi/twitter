@@ -1,7 +1,7 @@
-import client from "@/libs/server/client";
-import withHandler, { ResponseType } from "@/libs/server/withHandler";
+import client from "../../../../lib/server/client";
+import withHandler, { ResponseType } from "../../../../lib/server/withHandler";
 import { NextApiRequest, NextApiResponse } from "next";
-import { withApiSession } from "@/libs/server/withSession";
+import { withApiSession } from "../../../../lib/server/withSession";
 
 async function handler(
   req: NextApiRequest,
@@ -11,9 +11,9 @@ async function handler(
     query: {id},
     session: {user}
   } = req;
-  const product = await client.product.findUnique({
+  const tweet = await client.tweets.findUnique({
     where: {
-      id: +id.toString(),
+      id: Number(id)
     },
     include: {
       user: {
@@ -24,36 +24,22 @@ async function handler(
       },
     },
   });
-  const terms = product?.name.split(" ").map((word) => ({
-    name: {
-      contains: word,
-    },
-  }));
-  const relatedProducts = await client.product.findMany({
-    where: {
-      OR: terms,
-      AND: {
-        id: {
-          not: product?.id,
-        },
-      },
-    },
-  });
+  
   const isLiked = Boolean(
     await client.fav.findFirst({
         where: {
-            productId: product?.id,
-            userId: user?.id
+            tweetId: tweet?.id,
+            userName: user?.name
         },
         select: {
             id: true
         }
       })
   );
+  
   res.json({
     ok: true,
-    product,
-    relatedProducts,
+    tweet,
     isLiked
   });
 }
