@@ -1,14 +1,14 @@
-import client from "@/libs/server/client";
-import withHandler, { ResponseType } from "@/libs/server/withHandler";
+import client from "../../../lib/server/client";
+import withHandler, { ResponseType } from "../../../lib/server/withHandler";
 import { NextApiRequest, NextApiResponse } from "next";
-import { withApiSession } from "@/libs/server/withSession";
+import { withApiSession } from "../../../lib/server/withSession";
 
 async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ResponseType>
 ) {
     if(req.method === "GET"){
-        const products = await client.product.findMany({
+        const tweets = await client.tweets.findMany({
           include: {
             _count: {
               select: {
@@ -19,35 +19,31 @@ async function handler(
         });
         res.json({
             ok: true,
-            products
+            tweets
         });
     }
     if(req.method === "POST"){
         const {
-            body: { name, price, description },
+            body: { title, tweet },
             session: { user },
           } = req;
-        
-          const product = await client.product.create({
+          const createTweet = await client.tweets.create({
             data: {
-                name,
-                price: +price,
-                description,
-                image: "xx",
+                title,
+                text: tweet,
                 user: {
                     connect: {
-                        id:user?.id
+                        name:user?.name
                     }
                 }
             }
           });
-        
           const profile = await client.user.findUnique({
-            where: { id: req.session.user?.id },
+            where: { name: req.session.user?.name },
           });
           res.json({
             ok: true,
-            product
+            createTweet,
           });
     }
 }

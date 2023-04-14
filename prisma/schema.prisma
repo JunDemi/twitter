@@ -22,24 +22,24 @@ model Tweets {
   id          Int     @id @default(autoincrement())
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId      Int
+  user        User     @relation(fields: [userName], references: [name], onDelete: Cascade)
+  userName    String
   title       String 
   text        String
   favs        Fav[]
 
-  @@index([userId])
+  @@index([userName])
 }
 
 model Fav {
   id          Int     @id @default(autoincrement())
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId      Int
+  user        User     @relation(fields: [userName], references: [name], onDelete: Cascade)
+  userName    String
   tweet       Tweets  @relation(fields: [tweetId], references: [id], onDelete: Cascade)
   tweetId     Int
 
-  @@index([userId])
+  @@index([userName])
   @@index([tweetId])
 }
