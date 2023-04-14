@@ -5,8 +5,7 @@ import FloatingButton from "../components/floating-button";
 import Link from "next/link";
 import useUser from "../lib/client/useUser";
 import useSWR from "swr";
-import { Tweets } from "@prisma/client";
-import { useRouter } from "next/router";
+import {Tweets}  from "@prisma/client";
 
 interface TweetWithCount extends Tweets {
   _count: {
@@ -21,7 +20,6 @@ interface TweetResponse {
 
 export default () => {
   const { user, isLoading } = useUser();
-  const router = useRouter();
   const { data } = useSWR<TweetResponse>("/api/tweets");
   return (
     <>
