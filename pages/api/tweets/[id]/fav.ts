@@ -1,7 +1,7 @@
-import client from "@/libs/server/client";
-import withHandler, { ResponseType } from "@/libs/server/withHandler";
+import client from "../../../../lib/server/client";
+import withHandler, { ResponseType } from "../../../../lib/server/withHandler";
 import { NextApiRequest, NextApiResponse } from "next";
-import { withApiSession } from "@/libs/server/withSession";
+import { withApiSession } from "../../../../lib/server/withSession";
 
 
 
@@ -15,8 +15,8 @@ async function handler(
   } = req;
   const alreadyExists = await client.fav.findFirst({
     where: {
-      productId: +id?.toString(),
-      userId: user?.id
+      tweetId: Number(id),
+      userName: user?.name
     }
   });
   if(alreadyExists) {
@@ -30,12 +30,12 @@ async function handler(
       data: {
         user: {
           connect: {
-            id: user?.id
+            name: user?.name
           }
         },
-        product: {
+        tweet: {
           connect: {
-            id: +id?.toString()
+            id: Number(id),
           }
         }
       }

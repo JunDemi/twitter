@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Link from "next/link";
 import { cls } from "../lib/client/utils";
 import { useRouter } from "next/router";
+import useMutation from "../lib/client/useMutation";
 
 interface LayoutProps {
   title?: string;
@@ -18,8 +19,14 @@ export default function Layout({
 }: LayoutProps) {
   const router = useRouter();
   const onClick = () => {
-    router.back();
+    router.push("/");
   };
+
+  const [logout] = useMutation<any>("/api/users/signout");
+  const signOut = () => {
+    router.push("/log-in");
+    logout("Sign Out");
+  }
   return (
     <div>
       <div className="bg-white w-full h-12 max-w-xl justify-center text-lg px-10 font-medium  fixed text-gray-800 border-b top-0  flex items-center">
@@ -70,7 +77,7 @@ export default function Layout({
               </svg>
               <span>Home</span>
           </Link>
-          <Link href="/log-in"  className={cls(
+          <button onClick={signOut}  className={cls(
                 "flex flex-col items-center space-y-2 ",
                 router.pathname === "/profile"
                   ? "text-blue-400"
@@ -91,7 +98,7 @@ export default function Layout({
                 ></path>
               </svg>
               <span>Sign Out</span>
-          </Link>
+          </button>
         </nav>
       ) : null}
     </div>
